@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, resource, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { JokeSearchApiResponse } from '../app.model';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-rxsearch',
   imports: [FormsModule],
   template: `
     <input [ngModel]="query()" (ngModelChange)="query.set($event)"/>
@@ -15,7 +17,7 @@ import { JokeSearchApiResponse } from '../app.model';
         <span>{{joke.value}}</span>
       </p>
     }
-    <p class="error">{{jokeResource.error()}}</p>
+    <p class="error">{{error()}}</p>
   `,
   styles: [`
     .joke {
@@ -29,15 +31,20 @@ import { JokeSearchApiResponse } from '../app.model';
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent {
+export class RxsearchComponent {
+  readonly httpClient = inject(HttpClient);
   readonly api = 'https://api.chucknorris.io/jokes/search';
 
   readonly query = signal<string>('abc');
 
-  readonly jokeResource = resource({
+  readonly jokeResource = rxResource({
     request: () => ({query: this.query()}),
-    loader: ({request}) =>  fetch(`${this.api}?query=${request.query}`).then(res => res.json() as Promise<JokeSearchApiResponse>)
+    loader: ({request}) =>  this.httpClient.get<JokeSearchApiResponse>(`${this.api}?query=${request.query}`)
   });
 
   readonly loadingText = computed(() => this.jokeResource.isLoading() ? 'loading...' : '');
+  readonly error = computed(() => {
+    const error = this.jokeResource.error() as any;
+    return error?.error?.message ?? error;
+  });
 }
