@@ -8,6 +8,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       <a routerLink="search">Resource - 2</a>
       <a routerLink="rxsearch">RxResource</a>
       <a routerLink="linked-signal">Linked Signal</a>
+      <a routerLink="hot-module-reload">Hot Module Reload</a>
     </nav>
     <main>
       <router-outlet></router-outlet>

@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('./linked-signal/linked-signal.component').then(component => component.LinkedSignalComponent)
   },
   {
+    path: 'hot-module-reload',
+    loadComponent: () => import('./hot-module-reload/hot-module-reload.component').then(component => component.HotModuleReloadComponent)
+  },
+  {
     path: '**',
     redirectTo: 'random'
   }
