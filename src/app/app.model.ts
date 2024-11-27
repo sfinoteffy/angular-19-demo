@@ -7,3 +7,8 @@ export interface Joke {
   url: string;
   value: string;
 }
+
+export interface JokeSearchApiResponse {
+  total: number;
+  result: Joke[];
+}
