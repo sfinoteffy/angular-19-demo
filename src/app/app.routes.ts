@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () => import('./random/random.component').then(component => component.RandomComponent)
   },
   {
+    path: 'linked-signal',
+    loadComponent: () => import('./linked-signal/linked-signal.component').then(component => component.LinkedSignalComponent)
+  },
+  {
     path: '**',
     redirectTo: 'random'
   }

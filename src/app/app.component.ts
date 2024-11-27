@@ -4,10 +4,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   selector: 'app-root',
   template: `
     <nav>
-      <a routerLink="random">Resource - random</a>
-      <a routerLink="search">Resource - search</a>
-      <a routerLink="rxsearch">RxResource - RxSearch</a>
-
+      <a routerLink="random">Resource - 1</a>
+      <a routerLink="search">Resource - 2</a>
+      <a routerLink="rxsearch">RxResource</a>
+      <a routerLink="linked-signal">Linked Signal</a>
     </nav>
     <main>
       <router-outlet></router-outlet>
